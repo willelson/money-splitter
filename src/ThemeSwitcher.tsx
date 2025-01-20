@@ -1,8 +1,26 @@
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 
+type Theme = "light" | "dark";
+
 const ThemeToggle = () => {
-  const [theme, setTheme] = useState<"light" | "dark">("dark");
+  const [theme, setTheme] = useState<Theme>("dark");
+
+  useEffect(() => {
+    const systemPrefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+    const localStorageTheme = localStorage.getItem("theme") as
+      | Theme
+      | undefined;
+
+    if (localStorageTheme) {
+      setTheme(localStorageTheme);
+    } else if (systemPrefersDark) {
+      setTheme("dark");
+    }
+  });
 
   useEffect(() => {
     const htmlElement = document.documentElement;
@@ -16,8 +34,10 @@ const ThemeToggle = () => {
   const toggleTheme = () => {
     if (theme === "dark") {
       setTheme("light");
+      localStorage.setItem("theme", "light");
     } else {
       setTheme("dark");
+      localStorage.setItem("theme", "dark");
     }
   };
 
