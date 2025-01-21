@@ -1,11 +1,8 @@
 import { Button } from "./components/ui/button";
+import { useSidebarStore } from "./store";
 
-type SidebarProps = {
-  open: boolean;
-  setOpen: (state: boolean) => void;
-};
-
-function Sidebar({ open, setOpen }: SidebarProps) {
+function Sidebar() {
+  const { open, setOpen } = useSidebarStore();
   return (
     <div
       className={`absolute h-full w-64 bg-gray-50 dark:bg-neutral-700 ${open ? "left-0" : "-left-64"} transition-[left]`}
