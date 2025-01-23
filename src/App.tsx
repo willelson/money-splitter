@@ -1,8 +1,14 @@
+import { Menu } from "lucide-react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
 import { ThemeProvider } from "@/components/theme-provider";
 import Sidebar from "@/Sidebar";
-import ThemeToggle from "@/ThemeSwitcher";
 import { Button } from "./components/ui/button";
 import { useSidebarStore } from "./store";
+
+import GroupOverview from "./pages/GroupOverview";
+import GroupTransactions from "./pages/GroupTransactions";
+import LandingPage from "./pages/LandingPage";
 
 function App() {
   const { open, setOpen } = useSidebarStore();
@@ -11,17 +17,28 @@ function App() {
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
       <div className="relative flex h-screen w-screen overflow-hidden">
         <Sidebar />
-        <div
-          className={`bg-background flex-1 ${open ? "ml-64" : ""} min-w-[768px] transition-[margin]`}
-        >
-          <h1 className="text-foreground text-3xl font-light underline">
-            Hello world!
-          </h1>
-          <ThemeToggle />
-          <Button onClick={() => setOpen(!open)}>
-            {open ? "close" : "open"} sidebar
-          </Button>
-        </div>
+        <BrowserRouter>
+          <div
+            className={`bg-background flex-1 ${open ? "ml-64" : ""} min-w-[768px] transition-[margin]`}
+          >
+            <div className="h-10">
+              {open == false && (
+                <Button
+                  onClick={() => setOpen(true)}
+                  variant="ghost"
+                  size="icon"
+                >
+                  <Menu />
+                </Button>
+              )}
+            </div>
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/overview" element={<GroupTransactions />} />
+              <Route path="/transactions" element={<GroupOverview />} />
+            </Routes>
+          </div>
+        </BrowserRouter>
       </div>
     </ThemeProvider>
   );
