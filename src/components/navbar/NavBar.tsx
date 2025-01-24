@@ -1,5 +1,6 @@
-import { ChartLine, Plus, ScrollText } from "lucide-react";
+import { ChartLine, ScrollText } from "lucide-react";
 
+import AddButton from "./AddButton";
 import NavBarLink from "./NavBarLink";
 
 function NavBar() {
@@ -8,7 +9,7 @@ function NavBar() {
       <NavBarLink title="Overview" href="/overview">
         {({ className }) => <ChartLine className={className} />}
       </NavBarLink>
-      <Plus />
+      <AddButton />
       <NavBarLink title="Transactions" href="/transactions">
         {({ className }) => <ScrollText className={className} />}
       </NavBarLink>

@@ -1,4 +1,6 @@
-import NavBar from "@/components/NavBar";
+import NavBar from "@/components/navbar/NavBar";
+import Expense from "@/components/transactions/Expense";
+import Transaction from "@/components/transactions/Transaction";
 
 function GroupTransactions() {
   return (
@@ -7,9 +9,15 @@ function GroupTransactions() {
         GroupTransactions
         <div className="flex-1">
           <ul>
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
+            <li>
+              <Expense />
+            </li>
+            <li>
+              <Transaction />
+            </li>
+            <li>
+              <Expense />
+            </li>
           </ul>
         </div>
         <NavBar />
