@@ -1,8 +1,8 @@
 import { Menu } from "lucide-react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
+import Sidebar from "@/components/Sidebar";
 import { ThemeProvider } from "@/components/theme-provider";
-import Sidebar from "@/Sidebar";
 import { Button } from "./components/ui/button";
 import { useSidebarStore } from "./store";
 
@@ -19,9 +19,9 @@ function App() {
         <Sidebar />
         <BrowserRouter>
           <div
-            className={`bg-background flex-1 ${open ? "ml-64" : ""} min-w-[768px] transition-[margin]`}
+            className={`bg-background relative min-w-[768px] flex-1 transition-[margin] ${open ? "ml-64" : ""} `}
           >
-            <div className="h-10">
+            <div className="absolute h-10 pl-2 pt-2">
               {open == false && (
                 <Button
                   onClick={() => setOpen(true)}
@@ -34,8 +34,8 @@ function App() {
             </div>
             <Routes>
               <Route path="/" element={<LandingPage />} />
-              <Route path="/overview" element={<GroupTransactions />} />
-              <Route path="/transactions" element={<GroupOverview />} />
+              <Route path="/overview" element={<GroupOverview />} />
+              <Route path="/transactions" element={<GroupTransactions />} />
             </Routes>
           </div>
         </BrowserRouter>
