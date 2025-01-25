@@ -11,7 +11,7 @@ const NavBarLink = ({ children, title, href }: NavBarLink) => {
   const navigate = useNavigate();
 
   const highlighted = pathname === href;
-  const colorClass = `${highlighted ? "text-orange-300" : "text-secondary-muted"} text-sm font-light`;
+  const colorClass = `${highlighted ? "text-accent-foreground" : "text-secondary-muted"} text-sm font-light`;
 
   return (
     <div

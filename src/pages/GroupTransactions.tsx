@@ -1,3 +1,5 @@
+import { Input } from "@/components/ui/input";
+
 import NavBar from "@/components/navbar/NavBar";
 import Expense from "@/components/transactions/Expense";
 import Transaction from "@/components/transactions/Transaction";
@@ -5,8 +7,8 @@ import Transaction from "@/components/transactions/Transaction";
 function GroupTransactions() {
   return (
     <div className="flex h-full items-center justify-center">
-      <div className="flex h-[60vh] w-[350px] flex-col gap-4">
-        <h2 className="mb-2">Group Title</h2>
+      <div className="flex h-[70vh] w-[350px] flex-col gap-4">
+        <Input placeholder="search" />
         <div className="flex-1 overflow-auto">
           <ul>
             <li>

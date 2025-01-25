@@ -3,13 +3,23 @@ import NavBar from "@/components/navbar/NavBar";
 function GroupOverview() {
   return (
     <div className="flex h-full items-center justify-center">
-      <div className="flex h-[60vh] w-[350px] flex-col gap-4">
-        GroupOverview
+      <div className="flex h-[70vh] w-[350px] flex-col gap-2">
+        <div>
+          <h1>Group Title</h1>
+          <p className="text-muted-foreground text-md mt-4 font-extralight">
+            BALANCE
+          </p>
+        </div>
         <div className="flex-1">
-          <ul>
-            <li>a</li>
-            <li>b</li>
-            <li>c</li>
+          <ul className="bg-muted flex flex-col gap-4 rounded p-2">
+            <div className="flex justify-between">
+              <p>User A</p>
+              <p>€52,83</p>
+            </div>
+            <div className="flex justify-between">
+              <p>User B</p>
+              <p>-€52,83</p>
+            </div>
           </ul>
         </div>
         <NavBar />

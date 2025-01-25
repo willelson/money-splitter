@@ -8,7 +8,7 @@ function Sidebar() {
   const { open, setOpen } = useSidebarStore();
   return (
     <div
-      className={`absolute h-full w-64 bg-gray-50 p-2 transition-[left] dark:bg-neutral-700 ${open ? "left-0" : "-left-64"}`}
+      className={`bg-muted absolute h-full w-64 p-2 transition-[left] ${open ? "left-0" : "-left-64"}`}
     >
       <div className="flex justify-between">
         <Button onClick={() => setOpen(false)} variant="ghost" size="icon">

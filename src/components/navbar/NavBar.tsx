@@ -5,7 +5,7 @@ import NavBarLink from "./NavBarLink";
 
 function NavBar() {
   return (
-    <div className="flex w-full justify-between">
+    <div className="flex w-full justify-between pt-2">
       <NavBarLink title="Overview" href="/overview">
         {({ className }) => <ChartLine className={className} />}
       </NavBarLink>
