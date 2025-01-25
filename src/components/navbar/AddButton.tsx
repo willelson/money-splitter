@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,6 +10,7 @@ import {
 import { ArrowRight, Plus, ShoppingBasket, User } from "lucide-react";
 
 function AddButton() {
+  const navigate = useNavigate();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -16,7 +19,10 @@ function AddButton() {
       <DropdownMenuContent className="w-70">
         <DropdownMenuGroup>
           <DropdownMenuItem className="py-3">
-            <div className="flex items-center gap-3 hover:cursor-pointer">
+            <div
+              className="flex items-center gap-3 hover:cursor-pointer"
+              onClick={() => navigate("/new-expense")}
+            >
               <ShoppingBasket className="text-accent-foreground" />
               <div>
                 <p>New Expense</p>
@@ -27,7 +33,10 @@ function AddButton() {
             </div>
           </DropdownMenuItem>
           <DropdownMenuItem className="py-3">
-            <div className="flex items-center gap-3 hover:cursor-pointer">
+            <div
+              className="flex items-center gap-3 hover:cursor-pointer"
+              onClick={() => navigate("/new-transaction")}
+            >
               <ArrowRight className="text-accent-foreground" />
 
               <div>

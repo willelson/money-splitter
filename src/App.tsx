@@ -11,7 +11,9 @@ import GroupTransactions from "@/pages/GroupTransactions";
 import LandingPage from "@/pages/LandingPage";
 
 import JoinGroup from "@/forms/JoinGroup";
+import NewExpense from "@/forms/NewExpense";
 import NewGroup from "@/forms/NewGroup";
+import NewTransaction from "@/forms/NewTransaction";
 
 function App() {
   const { open, setOpen } = useSidebarStore();
@@ -44,6 +46,8 @@ function App() {
 
                   <Route path="/join-group" element={<JoinGroup />} />
                   <Route path="/new-group" element={<NewGroup />} />
+                  <Route path="/new-expense" element={<NewExpense />} />
+                  <Route path="/new-transaction" element={<NewTransaction />} />
                 </Routes>
               </div>
             </div>

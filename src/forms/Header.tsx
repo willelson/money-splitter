@@ -4,7 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router";
 
 type FormHeader = {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   backFunction?: () => void;
 };
 
