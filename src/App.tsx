@@ -6,9 +6,12 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Button } from "./components/ui/button";
 import { useSidebarStore } from "./store";
 
-import GroupOverview from "./pages/GroupOverview";
-import GroupTransactions from "./pages/GroupTransactions";
-import LandingPage from "./pages/LandingPage";
+import GroupOverview from "@/pages/GroupOverview";
+import GroupTransactions from "@/pages/GroupTransactions";
+import LandingPage from "@/pages/LandingPage";
+
+import JoinGroup from "@/forms/JoinGroup";
+import NewGroup from "@/forms/NewGroup";
 
 function App() {
   const { open, setOpen } = useSidebarStore();
@@ -32,11 +35,18 @@ function App() {
                 </Button>
               )}
             </div>
-            <Routes>
-              <Route path="/" element={<LandingPage />} />
-              <Route path="/overview" element={<GroupOverview />} />
-              <Route path="/transactions" element={<GroupTransactions />} />
-            </Routes>
+            <div className="flex h-full items-center justify-center">
+              <div className="h-[70vh] w-[350px]">
+                <Routes>
+                  <Route path="/" element={<LandingPage />} />
+                  <Route path="/overview" element={<GroupOverview />} />
+                  <Route path="/transactions" element={<GroupTransactions />} />
+
+                  <Route path="/join-group" element={<JoinGroup />} />
+                  <Route path="/new-group" element={<NewGroup />} />
+                </Routes>
+              </div>
+            </div>
           </div>
         </BrowserRouter>
       </div>

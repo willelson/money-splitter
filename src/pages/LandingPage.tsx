@@ -1,12 +1,17 @@
+import { useNavigate } from "react-router";
+
 import { Button } from "@/components/ui/button";
 
 function LandingPage() {
+  const navigate = useNavigate();
   return (
-    <div className="flex h-full items-center justify-center">
-      <div className="flex h-[70vh] w-[350px] flex-col gap-4">
-        <Button variant="secondary">New Group</Button>
-        <Button variant="secondary">Join Group</Button>
-      </div>
+    <div className="flex h-full flex-col justify-center gap-4">
+      <Button variant="secondary" onClick={() => navigate("/new-group")}>
+        New Group
+      </Button>
+      <Button variant="secondary" onClick={() => navigate("/join-group")}>
+        Join Group
+      </Button>
     </div>
   );
 }
