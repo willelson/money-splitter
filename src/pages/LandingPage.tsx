@@ -1,13 +1,13 @@
-import ThemeToggle from "@/ThemeSwitcher";
+import { Button } from "@/components/ui/button";
 
 function LandingPage() {
   return (
-    <>
-      <h1 className="text-foreground text-3xl font-light underline">
-        Hello world!
-      </h1>
-      <ThemeToggle />
-    </>
+    <div className="flex h-full items-center justify-center">
+      <div className="flex h-[70vh] w-[350px] flex-col gap-4">
+        <Button variant="secondary">New Group</Button>
+        <Button variant="secondary">Join Group</Button>
+      </div>
+    </div>
   );
 }
 

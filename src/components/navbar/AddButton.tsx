@@ -15,7 +15,7 @@ function AddButton() {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-70">
         <DropdownMenuGroup>
-          <DropdownMenuItem className="py-2">
+          <DropdownMenuItem className="py-3">
             <div className="flex items-center gap-3 hover:cursor-pointer">
               <ShoppingBasket className="text-accent-foreground" />
               <div>
@@ -26,7 +26,7 @@ function AddButton() {
               </div>
             </div>
           </DropdownMenuItem>
-          <DropdownMenuItem className="py-2">
+          <DropdownMenuItem className="py-3">
             <div className="flex items-center gap-3 hover:cursor-pointer">
               <ArrowRight className="text-accent-foreground" />
 
@@ -38,7 +38,7 @@ function AddButton() {
               </div>
             </div>
           </DropdownMenuItem>
-          <DropdownMenuItem className="py-2">
+          <DropdownMenuItem className="py-3">
             <div className="flex items-center gap-3 hover:cursor-pointer">
               <User className="text-accent-foreground" />
               <div>
