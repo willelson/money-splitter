@@ -1,24 +1,34 @@
 import NavBar from "@/components/navbar/NavBar";
+import { useGroupStore } from "@/store/groupStore";
+
+function generateRandomNumber(): number {
+  const random = Math.random() * 1000;
+  return parseFloat(random.toFixed(2));
+}
 
 function GroupOverview() {
+  const { groups, selectedGroupId } = useGroupStore();
+
+  // TODO update group store hook to provide selected group
+  const group = groups.find((g) => g.id === selectedGroupId);
+  if (group === undefined) return <p>group error</p>;
+
   return (
     <div className="flex h-full flex-col gap-2">
       <div>
-        <h1 className="text-lg">Group Title</h1>
-        <p className="text-muted-foreground text-md mt-4 font-extralight">
+        <h1 className="text-lg">{group.title}</h1>
+        <p className="text-md mt-4 font-extralight text-muted-foreground">
           BALANCE
         </p>
       </div>
       <div className="flex-1">
-        <ul className="bg-muted flex flex-col gap-4 rounded p-2">
-          <div className="flex justify-between py-1">
-            <p>User A</p>
-            <p>€52,83</p>
-          </div>
-          <div className="flex justify-between py-1">
-            <p>User B</p>
-            <p>-€52,83</p>
-          </div>
+        <ul className="flex flex-col gap-4 rounded bg-muted p-2">
+          {group.users.map((user) => (
+            <div className="flex justify-between py-1">
+              <p>{user.name}</p>
+              <p>€{generateRandomNumber()}</p>
+            </div>
+          ))}
         </ul>
       </div>
       <NavBar />
