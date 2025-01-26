@@ -11,8 +11,8 @@ import GroupTransactions from "@/pages/GroupTransactions";
 import LandingPage from "@/pages/LandingPage";
 
 import JoinGroup from "@/forms/JoinGroup";
+import NewGroup from "@/forms/new-group/Form";
 import NewExpense from "@/forms/NewExpense";
-import NewGroup from "@/forms/NewGroup";
 import NewTransaction from "@/forms/NewTransaction";
 
 function App() {

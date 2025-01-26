@@ -6,15 +6,17 @@ import { Input } from "@/components/ui/input";
 
 type AddUsers = {
   className?: string;
+  users: string[];
+  addUser: (user: string) => void;
+  removeUser: (index: number) => void;
 };
 
-function AddUsers({ className }: AddUsers) {
+function AddUsers({ className, users, addUser, removeUser }: AddUsers) {
   const [user, setUser] = useState<string>("");
-  const [users, setUsers] = useState<Array<string>>([]);
 
   const addUserToUsers = () => {
     if (user.length > 0) {
-      setUsers((u) => [...u, user]);
+      addUser(user);
       setUser("");
     }
   };
@@ -23,10 +25,6 @@ function AddUsers({ className }: AddUsers) {
     if (event.key === "Enter") {
       addUserToUsers();
     }
-  };
-
-  const removeUser = (index: number) => {
-    setUsers((u) => [...u.slice(0, index), ...u.slice(index + 1)]);
   };
 
   return (
@@ -40,12 +38,18 @@ function AddUsers({ className }: AddUsers) {
           value={user}
           onChange={(e) => setUser(e.target.value)}
         />
-        <Button variant="secondary" size="icon" onClick={addUserToUsers}>
+        <Button
+          className="min-w-[36px]"
+          variant="secondary"
+          size="icon"
+          onClick={addUserToUsers}
+          disabled={user.length === 0}
+        >
           <Plus />
         </Button>
       </div>
       {users.map((user, index) => (
-        <div className="flex justify-between py-2">
+        <div className="mt-3 flex justify-between py-2">
           <p>{user}</p>
           <Button variant="ghost" size="icon" onClick={() => removeUser(index)}>
             <X />
