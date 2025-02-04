@@ -4,14 +4,22 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import FormHeader from "@/forms/Header";
 
+import { client } from "@/trpc";
+
 function JoinGroup() {
   const [groupCode, setGroupCode] = useState("");
+
+  const joinGroup = async () => {
+    const group = await client.groups.get.query({ code: groupCode });
+    console.log(group);
+  };
+
   return (
     <div className="h-full">
       <FormHeader>
         <Button
           variant="ghost"
-          onClick={() => console.log("join group")}
+          onClick={joinGroup}
           disabled={groupCode.length === 0}
           className="text-accent-foreground"
         >

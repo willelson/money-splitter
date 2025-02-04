@@ -8,6 +8,8 @@ export const useGroupStore = create<GroupStore>((set) => ({
   setGroups: (groups: Group[]) => set(() => ({ groups })),
   setSelectedGroup: (groupId: number) =>
     set(() => ({ selectedGroupId: groupId })),
+  addGroup: (group: Group) =>
+    set((state) => ({ groups: [...state.groups, group] })),
 }));
 
 type GroupStore = {
@@ -15,6 +17,7 @@ type GroupStore = {
   selectedGroupId: number;
   setGroups: (groups: Group[]) => void;
   setSelectedGroup: (groupId: number) => void;
+  addGroup: (group: Group) => void;
 };
 
 type Group = {

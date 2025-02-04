@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import FormHeader from "@/forms/Header";
 import AddUsers from "@/forms/new-group/AddUsers";
-
-import { generateCode, saveGroupCodeLocally } from "@/store/utils/groups";
+import { saveGroupCodeLocally } from "@/store/utils/groups";
+import { client } from "@/trpc";
 
 function NewGroup() {
   const [name, setName] = useState("");
@@ -15,18 +15,15 @@ function NewGroup() {
   const removeUser = (index: number) =>
     setUsers((u) => [...u.slice(0, index), ...u.slice(index + 1)]);
 
-  const createGroup = () => {
+  const createGroup = async () => {
     console.log("create group");
 
-    const groupCode = generateCode();
-    saveGroupCodeLocally(groupCode);
-
-    const newGroupPayload = {
+    const newGroup = await client.groups.create.mutate({
       name,
       users,
-    };
+    });
 
-    console.log(newGroupPayload);
+    saveGroupCodeLocally(newGroup.code);
   };
 
   return (
