@@ -5,6 +5,8 @@ import { Input } from "@/components/ui/input";
 import FormHeader from "@/forms/Header";
 import AddUsers from "@/forms/new-group/AddUsers";
 
+import { generateCode, saveGroupCodeLocally } from "@/store/utils/groups";
+
 function NewGroup() {
   const [name, setName] = useState("");
 
@@ -15,6 +17,10 @@ function NewGroup() {
 
   const createGroup = () => {
     console.log("create group");
+
+    const groupCode = generateCode();
+    saveGroupCodeLocally(groupCode);
+
     const newGroupPayload = {
       name,
       users,

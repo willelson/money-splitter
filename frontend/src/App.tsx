@@ -1,4 +1,5 @@
 import { Menu } from "lucide-react";
+import { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Sidebar from "@/components/Sidebar";
@@ -15,8 +16,18 @@ import NewGroup from "@/forms/new-group/Form";
 import NewExpense from "@/forms/NewExpense";
 import NewTransaction from "@/forms/NewTransaction";
 
+import { loadLocalGroupCodes } from "@/store/utils/groups";
+
 function App() {
   const { open, setOpen } = useSidebarStore();
+
+  useEffect(() => {
+    const savedGroupCodes = loadLocalGroupCodes();
+
+    savedGroupCodes.forEach((code) => {
+      console.log(code);
+    });
+  }, []);
 
   return (
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
@@ -24,7 +35,7 @@ function App() {
         <Sidebar />
         <BrowserRouter>
           <div
-            className={`bg-background relative min-w-[768px] flex-1 transition-[margin] ${open ? "ml-64" : ""} `}
+            className={`relative min-w-[768px] flex-1 bg-background transition-[margin] ${open ? "ml-64" : ""} `}
           >
             <div className="absolute h-10 pl-2 pt-2">
               {open == false && (
