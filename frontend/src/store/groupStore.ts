@@ -1,9 +1,7 @@
 import { create } from "zustand";
 
-import dummyGroupStore from "./dummyGroupStore";
-
 export const useGroupStore = create<GroupStore>((set) => ({
-  groups: dummyGroupStore,
+  groups: [],
   selectedGroupId: 0,
   setGroups: (groups: Group[]) => set(() => ({ groups })),
   setSelectedGroup: (groupId: number) =>
@@ -20,17 +18,18 @@ type GroupStore = {
   addGroup: (group: Group) => void;
 };
 
-type Group = {
+export type Group = {
   id: number;
-  title: string;
+  name: string;
   code: string;
-  created_at: Date;
+  created_at: string;
   users: User[];
 };
 
 type User = {
   id: number;
-  groupId: number;
+  group_id: number | null;
   name: string;
-  created_at: Date;
+  created_at: string;
+  active: boolean;
 };

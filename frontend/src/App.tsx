@@ -16,17 +16,26 @@ import NewGroup from "@/forms/new-group/Form";
 import NewExpense from "@/forms/NewExpense";
 import NewTransaction from "@/forms/NewTransaction";
 
+import { Group, useGroupStore } from "@/store/groupStore";
 import { loadLocalGroupCodes } from "@/store/utils/groups";
+import { client } from "@/trpc";
 
 function App() {
   const { open, setOpen } = useSidebarStore();
+  const { setGroups } = useGroupStore();
 
   useEffect(() => {
-    const savedGroupCodes = loadLocalGroupCodes();
+    const getGroups = async () => {
+      const savedGroupCodes = loadLocalGroupCodes();
 
-    savedGroupCodes.forEach((code) => {
-      console.log(code);
-    });
+      const groups: Group[] = await Promise.all(
+        savedGroupCodes.map((code) => client.groups.get.query({ code })),
+      );
+
+      setGroups(groups);
+    };
+
+    getGroups();
   }, []);
 
   return (

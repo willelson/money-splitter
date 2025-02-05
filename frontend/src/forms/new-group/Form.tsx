@@ -9,15 +9,13 @@ import { client } from "@/trpc";
 
 function NewGroup() {
   const [name, setName] = useState("");
-
   const [users, setUsers] = useState<string[]>([]);
+
   const addUser = (user: string) => setUsers((u) => [...u, user]);
   const removeUser = (index: number) =>
     setUsers((u) => [...u.slice(0, index), ...u.slice(index + 1)]);
 
   const createGroup = async () => {
-    console.log("create group");
-
     const newGroup = await client.groups.create.mutate({
       name,
       users,

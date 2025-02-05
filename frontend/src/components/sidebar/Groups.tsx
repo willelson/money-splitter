@@ -19,11 +19,12 @@ function Groups({ className }: Groups) {
 
         return (
           <div
+            key={group.id}
             className="hover:cursor-pointer"
             onClick={() => setSelectedGroup(group.id)}
           >
             <p className={`${isSelected ? "text-accent-foreground" : ""}`}>
-              {group.title}
+              {group.name}
             </p>
             <p className="text-xs text-muted-foreground">
               {groupSize} Person{groupSize > 1 ? "s" : ""}

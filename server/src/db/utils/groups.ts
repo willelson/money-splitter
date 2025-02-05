@@ -4,13 +4,16 @@ import { db } from "../index";
 import { groups } from "../schema/groups";
 import { users } from "../schema/users";
 
+type Group = typeof groups.$inferSelect & {
+  users: (typeof users.$inferSelect)[];
+};
 type Group = typeof groups.$inferSelect;
 type GroupInsert = typeof groups.$inferInsert;
 
 export const getGroup = async (code: string): Promise<Group> => {
   let group = await db.query.groups.findFirst({
     where: eq(groups.code, code),
-    with: { users: true, transactions: true },
+    with: { users: true },
   });
 
   if (group === undefined) {
@@ -23,7 +26,7 @@ export const getGroup = async (code: string): Promise<Group> => {
 export const createGroup = async (
   name: string,
   code: string = ""
-): Promise<Group> => {
+): Promise<typeof groups.$inferSelect> => {
   if (!code) {
     code = Math.random().toString(36).slice(2, 14);
   }

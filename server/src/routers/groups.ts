@@ -1,10 +1,11 @@
 import { z } from "zod";
 import { t } from "../trpc";
 
-const groupProcedure = t.procedure;
+import { addUserToGroup, createGroup, getGroup } from "../db/utils/groups";
+import { createUser } from "../db/utils/users";
 
 export const groupRouter = t.router({
-  getGroup: groupProcedure
+  get: t.procedure
     .input(z.object({ code: z.string() }))
     .query(({ input }) => {
       return {
@@ -17,5 +18,18 @@ export const groupRouter = t.router({
           { id: 2, name: "Pete" },
         ],
       };
+    .query(({ input }) => getGroup(input.code)),
+
+  create: t.procedure
+    .input(z.object({ name: z.string(), users: z.array(z.string()) }))
+    .mutation(async ({ input }) => {
+      const newGroup = await createGroup(input.name);
+
+      input.users.forEach(async (userName) => {
+        const user = await createUser(userName);
+        await addUserToGroup(newGroup.id, user.id);
+      });
+
+      return newGroup;
     }),
 });
