@@ -30,6 +30,8 @@ export const groupRouter = t.router({
         await addUserToGroup(newGroup.id, user.id);
       });
 
-      return newGroup;
+      const updatedGroup = getGroup(newGroup.code);
+
+      return updatedGroup;
     }),
 });

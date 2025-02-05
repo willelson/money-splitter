@@ -48,14 +48,20 @@ function AddUsers({ className, users, addUser, removeUser }: AddUsers) {
           <Plus />
         </Button>
       </div>
-      {users.map((user, index) => (
-        <div className="mt-3 flex justify-between py-2">
-          <p>{user}</p>
-          <Button variant="ghost" size="icon" onClick={() => removeUser(index)}>
-            <X />
-          </Button>
-        </div>
-      ))}
+      <ul className="mt-3">
+        {users.map((user, index) => (
+          <li className="flex justify-between py-2" key={`new-user-${index}`}>
+            <p>{user}</p>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => removeUser(index)}
+            >
+              <X />
+            </Button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

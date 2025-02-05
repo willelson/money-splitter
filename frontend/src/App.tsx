@@ -17,8 +17,7 @@ import NewExpense from "@/forms/NewExpense";
 import NewTransaction from "@/forms/NewTransaction";
 
 import { Group, useGroupStore } from "@/store/groupStore";
-import { loadLocalGroupCodes } from "@/store/utils/groups";
-import { client } from "@/trpc";
+import { getGroupsFromLocalStorageCodes } from "@/store/utils/groups";
 
 function App() {
   const { open, setOpen } = useSidebarStore();
@@ -26,15 +25,9 @@ function App() {
 
   useEffect(() => {
     const getGroups = async () => {
-      const savedGroupCodes = loadLocalGroupCodes();
-
-      const groups: Group[] = await Promise.all(
-        savedGroupCodes.map((code) => client.groups.get.query({ code })),
-      );
-
+      const groups: Group[] = await getGroupsFromLocalStorageCodes();
       setGroups(groups);
     };
-
     getGroups();
   }, []);
 

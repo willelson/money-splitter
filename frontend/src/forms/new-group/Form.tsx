@@ -4,12 +4,17 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import FormHeader from "@/forms/Header";
 import AddUsers from "@/forms/new-group/AddUsers";
+import { useGroupStore } from "@/store/groupStore";
 import { saveGroupCodeLocally } from "@/store/utils/groups";
 import { client } from "@/trpc";
+import { useNavigate } from "react-router-dom";
 
 function NewGroup() {
   const [name, setName] = useState("");
   const [users, setUsers] = useState<string[]>([]);
+
+  const { addGroup, setSelectedGroup } = useGroupStore();
+  const navigate = useNavigate();
 
   const addUser = (user: string) => setUsers((u) => [...u, user]);
   const removeUser = (index: number) =>
@@ -20,6 +25,13 @@ function NewGroup() {
       name,
       users,
     });
+
+    // add newGroup to zustand store and select it
+    addGroup(newGroup);
+    setSelectedGroup(newGroup.id);
+
+    // navigate to group overview
+    navigate("/overview");
 
     saveGroupCodeLocally(newGroup.code);
   };
