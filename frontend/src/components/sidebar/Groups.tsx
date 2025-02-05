@@ -1,4 +1,6 @@
 import { useGroupStore } from "@/store/groupStore";
+import { Plus } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 type Groups = {
   className?: string;
@@ -6,12 +8,24 @@ type Groups = {
 
 function Groups({ className }: Groups) {
   const { groups, selectedGroupId, setSelectedGroup } = useGroupStore();
+  const navigate = useNavigate();
+
+  const selectGroup = (groupId: number) => {
+    setSelectedGroup(groupId);
+    navigate("/overview");
+  };
 
   return (
     <div
       className={`flex flex-col gap-4 rounded bg-primary-foreground p-3 ${className}`}
     >
-      <p className="text-sm text-muted-foreground">GROUPS</p>
+      <div className="flex items-center justify-between">
+        <p className="text-sm text-muted-foreground">GROUPS</p>
+        <Plus
+          className="text-secondary-foreground hover:cursor-pointer"
+          onClick={() => navigate("/")}
+        />
+      </div>
 
       {groups.map((group) => {
         const groupSize = group.users.length;
@@ -21,7 +35,7 @@ function Groups({ className }: Groups) {
           <div
             key={group.id}
             className="hover:cursor-pointer"
-            onClick={() => setSelectedGroup(group.id)}
+            onClick={() => selectGroup(group.id)}
           >
             <p className={`${isSelected ? "text-accent-foreground" : ""}`}>
               {group.name}

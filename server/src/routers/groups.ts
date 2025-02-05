@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { t } from "../trpc";
 
@@ -7,19 +8,16 @@ import { createUser } from "../db/utils/users";
 export const groupRouter = t.router({
   get: t.procedure
     .input(z.object({ code: z.string() }))
-    .query(({ input }) => {
-      return {
-        id: 13,
-        code: input.code,
-        name: "tRPC test",
-        created_at: new Date("12 Jan 2025"),
-        users: [
-          { id: 1, name: "Anna" },
-          { id: 2, name: "Pete" },
-        ],
-      };
-    .query(({ input }) => getGroup(input.code)),
-
+    .query(async ({ input }) => {
+      const group = await getGroup(input.code);
+      if (!group) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Group not found",
+        });
+      }
+      return group;
+    }),
   create: t.procedure
     .input(z.object({ name: z.string(), users: z.array(z.string()) }))
     .mutation(async ({ input }) => {
@@ -30,7 +28,12 @@ export const groupRouter = t.router({
         await addUserToGroup(newGroup.id, user.id);
       });
 
-      const updatedGroup = getGroup(newGroup.code);
+      const updatedGroup = await getGroup(newGroup.code);
+
+      if (updatedGroup === undefined) {
+        // TODO: refine this error
+        throw Error("Problem fetching newly created group");
+      }
 
       return updatedGroup;
     }),

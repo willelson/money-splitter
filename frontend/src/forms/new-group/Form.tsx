@@ -6,7 +6,7 @@ import FormHeader from "@/forms/Header";
 import AddUsers from "@/forms/new-group/AddUsers";
 import { useGroupStore } from "@/store/groupStore";
 import { saveGroupCodeLocally } from "@/store/utils/groups";
-import { client } from "@/trpc";
+import { trpc } from "@/trpc";
 import { useNavigate } from "react-router-dom";
 
 function NewGroup() {
@@ -20,20 +20,24 @@ function NewGroup() {
   const removeUser = (index: number) =>
     setUsers((u) => [...u.slice(0, index), ...u.slice(index + 1)]);
 
-  const createGroup = async () => {
-    const newGroup = await client.groups.create.mutate({
-      name,
-      users,
-    });
+  const mutation = trpc.groups.create.useMutation({
+    onSuccess: (newGroup) => {
+      // add newGroup to zustand store and select it
+      addGroup(newGroup);
+      setSelectedGroup(newGroup.id);
 
-    // add newGroup to zustand store and select it
-    addGroup(newGroup);
-    setSelectedGroup(newGroup.id);
+      // navigate to group overview
+      navigate("/overview");
 
-    // navigate to group overview
-    navigate("/overview");
+      saveGroupCodeLocally(newGroup.code);
+    },
+    onError: (error) => {
+      console.error("Error creating group:", error);
+    },
+  });
 
-    saveGroupCodeLocally(newGroup.code);
+  const createGroup = () => {
+    mutation.mutate({ name, users });
   };
 
   return (

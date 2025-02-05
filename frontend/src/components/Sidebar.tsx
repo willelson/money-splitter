@@ -1,12 +1,34 @@
 import { ChevronRight, PanelLeftClose } from "lucide-react";
+import { trpc } from "../trpc";
 
 import Groups from "@/components/sidebar/Groups";
 import { Button } from "@/components/ui/button";
 import { useSidebarStore } from "@/store";
 import ThemeToggle from "@/ThemeSwitcher";
 
+import { useGroupStore } from "@/store/groupStore";
+import { loadLocalGroupCodes } from "@/store/utils/groups";
+
 function Sidebar() {
   const { open, setOpen } = useSidebarStore();
+  const { groups, setGroups } = useGroupStore();
+
+  const savedGroupCodes = loadLocalGroupCodes();
+
+  trpc.groups.get.useQuery(
+    {
+      code: savedGroupCodes[0],
+    },
+    {
+      enabled: groups.length === 0,
+      staleTime: Infinity,
+      cacheTime: Infinity,
+      refetchOnWindowFocus: false,
+      onSuccess: (fetchedGroup) => {
+        setGroups([fetchedGroup]);
+      },
+    },
+  );
 
   return (
     <div

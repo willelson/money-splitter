@@ -1,6 +1,3 @@
-import { Group } from "@/store/groupStore";
-import { client } from "@/trpc";
-
 const GROUP_STORAGE_KEY = "expense-group-codes";
 
 /**
@@ -23,13 +20,3 @@ export const saveGroupCodeLocally = (newCode: string) => {
 };
 
 export const generateCode = () => Math.random().toString(36).slice(2, 14);
-
-export const getGroupsFromLocalStorageCodes = async () => {
-  const savedGroupCodes = loadLocalGroupCodes();
-
-  const groups: Group[] = await Promise.all(
-    savedGroupCodes.map((code) => client.groups.get.query({ code })),
-  );
-
-  return groups;
-};
