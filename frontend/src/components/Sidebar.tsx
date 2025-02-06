@@ -15,18 +15,16 @@ function Sidebar() {
 
   const savedGroupCodes = loadLocalGroupCodes();
 
-  trpc.groups.get.useQuery(
+  trpc.groups.getMany.useQuery(
     {
-      code: savedGroupCodes[0],
+      codes: savedGroupCodes,
     },
     {
       enabled: groups.length === 0,
       staleTime: Infinity,
       cacheTime: Infinity,
       refetchOnWindowFocus: false,
-      onSuccess: (fetchedGroup) => {
-        setGroups([fetchedGroup]);
-      },
+      onSuccess: (fetchedGroups) => setGroups(fetchedGroups),
     },
   );
 

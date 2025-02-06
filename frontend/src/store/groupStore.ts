@@ -3,16 +3,26 @@ import { create } from "zustand";
 export const useGroupStore = create<GroupStore>((set) => ({
   groups: [],
   selectedGroupId: 0,
+  selectedGroup: null,
   setGroups: (groups: Group[]) => set(() => ({ groups })),
   setSelectedGroup: (groupId: number) =>
+    set((store) => {
     set(() => ({ selectedGroupId: groupId })),
+      const group = store.groups.find((g) => g.id === groupId);
+      if (group === undefined) {
+        throw Error(`Group with id ${groupId} does not exist in the store`);
+      }
+
+      return { selectedGroupId: groupId, selectedGroup: group };
+    }),
   addGroup: (group: Group) =>
     set((state) => ({ groups: [...state.groups, group] })),
 }));
 
 type GroupStore = {
   groups: Group[];
-  selectedGroupId: number;
+  selectedGroupId: number | null;
+  selectedGroup: Group | null;
   setGroups: (groups: Group[]) => void;
   setSelectedGroup: (groupId: number) => void;
   addGroup: (group: Group) => void;
