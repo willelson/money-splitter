@@ -4,6 +4,7 @@ export const useGroupStore = create<GroupStore>((set) => ({
   groups: [],
   selectedGroupId: 0,
   selectedGroup: null,
+  loadingGroups: true,
   setGroups: (groups: Group[]) => set(() => ({ groups })),
   setSelectedGroup: (groupId: number) =>
     set((store) => {
@@ -17,15 +18,20 @@ export const useGroupStore = create<GroupStore>((set) => ({
     }),
   addGroup: (group: Group) =>
     set((state) => ({ groups: [...state.groups, group] })),
+
+  setLoadingGroups: (isLoading: boolean) =>
+    set(() => ({ loadingGroups: isLoading })),
 }));
 
 type GroupStore = {
   groups: Group[];
   selectedGroupId: number | null;
   selectedGroup: Group | null;
+  loadingGroups: boolean;
   setGroups: (groups: Group[]) => void;
   setSelectedGroup: (groupId: number) => void;
   addGroup: (group: Group) => void;
+  setLoadingGroups: (isLoading: boolean) => void;
 };
 
 export type Group = {

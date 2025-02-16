@@ -7,10 +7,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useCodeParam } from "@/hooks/useCodeParam";
 import { ArrowRight, Plus, ShoppingBasket, User } from "lucide-react";
 
 function AddButton() {
   const navigate = useNavigate();
+  const { code } = useCodeParam();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -21,7 +23,7 @@ function AddButton() {
           <DropdownMenuItem className="py-3">
             <div
               className="flex items-center gap-3 hover:cursor-pointer"
-              onClick={() => navigate("/new-expense")}
+              onClick={() => navigate(`/group/${code}/new-expense`)}
             >
               <ShoppingBasket className="text-accent-foreground" />
               <div>

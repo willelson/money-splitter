@@ -10,9 +10,9 @@ function Groups({ className }: Groups) {
   const { groups, selectedGroupId, setSelectedGroup } = useGroupStore();
   const navigate = useNavigate();
 
-  const selectGroup = (groupId: number) => {
+  const selectGroup = (groupId: number, groupCode: string) => {
     setSelectedGroup(groupId);
-    navigate("/overview");
+    navigate(`/group/${groupCode}/overview`);
   };
 
   return (
@@ -35,7 +35,7 @@ function Groups({ className }: Groups) {
           <div
             key={group.id}
             className="hover:cursor-pointer"
-            onClick={() => selectGroup(group.id)}
+            onClick={() => selectGroup(group.id, group.code)}
           >
             <p className={`${isSelected ? "text-accent-foreground" : ""}`}>
               {group.name}

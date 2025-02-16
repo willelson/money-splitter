@@ -48,17 +48,23 @@ function App() {
                   <div className="h-[70vh] w-[350px]">
                     <Routes>
                       <Route path="/" element={<LandingPage />} />
-                      <Route path="/overview" element={<GroupOverview />} />
                       <Route
-                        path="/transactions"
+                        path="/group/:code/overview"
+                        element={<GroupOverview />}
+                      />
+                      <Route
+                        path="/group/:code/transactions"
                         element={<GroupTransactions />}
                       />
 
                       <Route path="/join-group" element={<JoinGroup />} />
                       <Route path="/new-group" element={<NewGroup />} />
-                      <Route path="/new-expense" element={<NewExpense />} />
                       <Route
-                        path="/new-transaction"
+                        path="/group/:code/new-expense"
+                        element={<NewExpense />}
+                      />
+                      <Route
+                        path="/group/:code/new-transaction"
                         element={<NewTransaction />}
                       />
                     </Routes>

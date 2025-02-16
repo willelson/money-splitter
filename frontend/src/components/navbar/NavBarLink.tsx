@@ -4,13 +4,14 @@ type NavBarLink = {
   children: (props: { className: string }) => React.ReactNode;
   title: string;
   href: string;
+  selector: string;
 };
 
-const NavBarLink = ({ children, title, href }: NavBarLink) => {
+const NavBarLink = ({ children, title, href, selector }: NavBarLink) => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  const highlighted = pathname === href;
+  const highlighted = pathname.includes(selector);
   const colorClass = `${highlighted ? "text-accent-foreground" : "text-secondary-muted"} text-sm font-light`;
 
   return (

@@ -1,4 +1,5 @@
 import { ChevronRight, PanelLeftClose } from "lucide-react";
+import { useEffect } from "react";
 import { trpc } from "../trpc";
 
 import Groups from "@/components/sidebar/Groups";
@@ -11,11 +12,11 @@ import { loadLocalGroupCodes } from "@/store/utils/groups";
 
 function Sidebar() {
   const { open, setOpen } = useSidebarStore();
-  const { groups, setGroups } = useGroupStore();
+  const { groups, setGroups, setLoadingGroups } = useGroupStore();
 
   const savedGroupCodes = loadLocalGroupCodes();
 
-  trpc.groups.getMany.useQuery(
+  const { isLoading } = trpc.groups.getMany.useQuery(
     {
       codes: savedGroupCodes,
     },
@@ -27,6 +28,7 @@ function Sidebar() {
       onSuccess: (fetchedGroups) => setGroups(fetchedGroups),
     },
   );
+  useEffect(() => setLoadingGroups(isLoading), [isLoading]);
 
   return (
     <div
