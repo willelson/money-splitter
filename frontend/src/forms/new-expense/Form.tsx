@@ -1,18 +1,22 @@
 import { ChevronRight } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import FormHeader from "@/forms/Header";
 import { useCodeParam } from "@/hooks/useCodeParam";
 import { useGroupStore, User } from "@/store/groupStore";
+import { trpc } from "@/trpc";
 import AmountInput from "./AmountInput";
 import UserSelection from "./UserSelection";
 
 type ExpenseFormState = "main" | "senderSelection" | "recipientsSelection";
 
 function NewExpense() {
+  useCodeParam();
   const { selectedGroup } = useGroupStore();
+  const navigate = useNavigate();
 
   const [amount, setAmount] = useState<number>(0);
   const [title, setTitle] = useState<string>("");
@@ -24,12 +28,8 @@ function NewExpense() {
 
   const [formState, setFormState] = useState<ExpenseFormState>("main");
 
-  useCodeParam();
-
-  if (selectedGroup === null) return <p>group error</p>;
-
   const selectSender = (userId: number) => {
-    const user = selectedGroup.users.find((u) => u.id === userId);
+    const user = selectedGroup?.users.find((u) => u.id === userId);
     if (user === undefined) {
       throw Error("Could not find selected user");
     }
@@ -53,6 +53,52 @@ function NewExpense() {
     }
   };
 
+  const mutation = trpc.transactions.add.useMutation({
+    onSuccess: () => {
+      console.log("Transaction added sucessfully");
+      navigate(`/group/${selectedGroup?.code}/overview`);
+    },
+    onError: (error) => {
+      console.error("Error adding transaction:", error);
+      alert("There was an error adding this transaction");
+    },
+  });
+
+  // TODO: look at the position of this - code above could run with group being null
+  if (selectedGroup === null) return <p>group error</p>;
+
+  const addExpense = () => {
+    const errors: string[] = [];
+
+    if (title.length === 0) {
+      errors.push("Title is required");
+    }
+    if (sender === null) {
+      errors.push("No sender is selected");
+    }
+    if (recipients.size === 0) {
+      errors.push("No recipeints are selected");
+    }
+
+    if (errors.length > 0) {
+      const alertMessage =
+        "There are problems with the form: \n\n" + errors.join("\n");
+      alert(alertMessage);
+      return;
+    }
+
+    const newTransaction = {
+      groupId: selectedGroup.id,
+      senderId: sender!.id,
+      recipientIds: [...recipients],
+      amount: amount,
+      name: title,
+      type: "expense",
+    };
+
+    mutation.mutate(newTransaction);
+  };
+
   const senderSelection = (
     <div className={formState !== "senderSelection" ? "hidden" : ""}>
       <FormHeader backFunction={() => setFormState("main")}></FormHeader>
@@ -74,14 +120,6 @@ function NewExpense() {
       />
     </div>
   );
-
-  const addExpense = () => {
-    console.log(`group id: ${selectedGroup.id}`);
-    console.log(`title: ${title}`);
-    console.log(`amount: ${amount}`);
-    console.log(`sender id: ${sender?.id}`);
-    console.log(`recipeint ids: ${[...recipients].join(", ")}`);
-  };
 
   return (
     <>

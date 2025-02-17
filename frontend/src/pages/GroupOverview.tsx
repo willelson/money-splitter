@@ -1,7 +1,7 @@
 import NavBar from "@/components/navbar/NavBar";
 import { useCodeParam } from "@/hooks/useCodeParam";
 import { useGroupStore } from "@/store/groupStore";
-import { trpc } from "../trpc";
+import { trpc } from "@/trpc";
 
 function GroupOverview() {
   const { selectedGroup } = useGroupStore();
