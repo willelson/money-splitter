@@ -1,17 +1,28 @@
 import { ShoppingBasket } from "lucide-react";
 
-function Expense() {
+type Expense = {
+  title: string;
+  amount: string;
+  by: string;
+};
+
+function Expense({ title, amount, by }: Expense) {
   return (
     <div className="border-b px-1 py-2">
       <div className="flex justify-between">
         <div className="flex items-center gap-3">
           <ShoppingBasket className="text-accent-foreground" />
           <div>
-            <p>expense title</p>
-            <p className="text-muted-foreground">user name</p>
+            <p>{title}</p>
+            <p className="text-muted-foreground">{by}</p>
           </div>
         </div>
-        <p>€14,49</p>
+        <p>
+          {parseFloat(amount).toLocaleString("de-DE", {
+            style: "currency",
+            currency: "EUR",
+          })}
+        </p>
       </div>
     </div>
   );

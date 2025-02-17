@@ -36,7 +36,12 @@ function GroupOverview() {
               key={`group-user-${index}`}
             >
               <p>{user.name}</p>
-              <p>€ {user.balance.toFixed(2)}</p>
+              <p>
+                {user.balance.toLocaleString("de-DE", {
+                  style: "currency",
+                  currency: "EUR",
+                })}
+              </p>
             </li>
           ))}
         </ul>
