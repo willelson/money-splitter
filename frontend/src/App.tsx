@@ -15,7 +15,7 @@ import LandingPage from "@/pages/LandingPage";
 
 import JoinGroup from "@/forms/JoinGroup";
 import NewGroup from "@/forms/new-group/Form";
-import NewExpense from "@/forms/NewExpense";
+import NewExpense from "@/forms/new-expense/Form";
 import NewTransaction from "@/forms/NewTransaction";
 
 const queryClient = new QueryClient();

@@ -42,7 +42,7 @@ export type Group = {
   users: User[];
 };
 
-type User = {
+export type User = {
   id: number;
   group_id: number | null;
   name: string;
