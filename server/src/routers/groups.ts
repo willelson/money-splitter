@@ -8,6 +8,7 @@ import {
   getGroup,
   getGroups,
 } from "../db/utils/groups";
+import { getUserBalances } from "../db/utils/transactions";
 import { createUser } from "../db/utils/users";
 
 export const groupRouter = t.router({
@@ -49,5 +50,14 @@ export const groupRouter = t.router({
       }
 
       return updatedGroup;
+    }),
+
+  getBalances: t.procedure
+    .input(z.object({ code: z.string() }))
+    .query(async ({ input }) => {
+      const group = await getGroup(input.code);
+      const balances = await getUserBalances(group.id);
+
+      return balances;
     }),
 });
