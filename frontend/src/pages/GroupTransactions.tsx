@@ -1,5 +1,6 @@
 import NavBar from "@/components/navbar/NavBar";
 import Expense from "@/components/transactions/Expense";
+import TransactionSkeleton from "@/components/transactions/TransactionSkeleton";
 import { Input } from "@/components/ui/input";
 import { useCodeParam } from "@/hooks/useCodeParam";
 import { useGroupStore } from "@/store/groupStore";
@@ -16,13 +17,16 @@ function GroupTransactions() {
   const groupUsers: Record<number, string> = {};
   selectedGroup?.users.forEach((user) => (groupUsers[user.id] = user.name));
 
-  return (
-    <div className="flex h-full flex-col gap-4">
-      <Input placeholder="search" />
-      <div className="flex-1 overflow-auto">
+  const transactionList = (
+    <div className="flex-1 overflow-auto">
+      {transactions?.length === 0 ? (
+        <p className="text-light mt-4 text-center text-sm text-muted-foreground">
+          No transactions yet...
+        </p>
+      ) : (
         <ul>
           {transactions?.map((transaction) => (
-            <li key={`group=${code}-transaction-${transaction.id}`}>
+            <li key={`group-${code}-transaction-${transaction.id}`}>
               <Expense
                 title={transaction.name}
                 amount={transaction.amount}
@@ -31,7 +35,14 @@ function GroupTransactions() {
             </li>
           ))}
         </ul>
-      </div>
+      )}
+    </div>
+  );
+
+  return (
+    <div className="flex h-full flex-col gap-4">
+      <Input placeholder="search" />
+      {isLoading ? <TransactionSkeleton /> : transactionList}
       <NavBar />
     </div>
   );
