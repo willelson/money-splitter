@@ -140,7 +140,7 @@ function NewExpense() {
           </div>
 
           <div className="mt-4 flex flex-col justify-center gap-4 rounded bg-muted px-2 py-1">
-            <AmountInput value={amount} onChange={setAmount} />
+            <AmountInput onChange={setAmount} />
           </div>
           <div className="mt-4 flex flex-col gap-4 rounded bg-muted p-2">
             <div className="flex justify-between py-1">

@@ -4,14 +4,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import FormHeader from "@/forms/Header";
 
-import { client } from "@/trpc";
+// import { client } from "@/trpc";
 
 function JoinGroup() {
   const [groupCode, setGroupCode] = useState("");
 
   const joinGroup = async () => {
-    const group = await client.groups.get.query({ code: groupCode });
-    console.log(group);
+    console.log("join Group");
+    // const group = await client.groups.get.query({ code: groupCode });
+    // console.log(group);
   };
 
   return (

@@ -3,11 +3,10 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 
 type AmountInput = {
-  value: number;
   onChange: (value: number) => void;
 };
 
-function AmountInput({ value, onChange }: AmountInput) {
+function AmountInput({ onChange }: AmountInput) {
   const [amount, setAmount] = useState<string>("");
   const [showInput, setShowInput] = useState<boolean>(true);
 
