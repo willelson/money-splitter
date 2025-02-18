@@ -32,7 +32,7 @@ function Sidebar() {
 
   return (
     <div
-      className={`absolute h-full w-64 bg-muted p-2 transition-[left] ${open ? "left-0" : "-left-64"}`}
+      className={`absolute z-10 h-full w-64 bg-muted p-2 transition-[left] ${open ? "left-0" : "-left-64"}`}
     >
       <div className="mb-10 flex justify-between">
         <Button onClick={() => setOpen(false)} variant="ghost" size="icon">

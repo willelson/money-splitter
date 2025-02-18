@@ -14,8 +14,8 @@ import GroupTransactions from "@/pages/GroupTransactions";
 import LandingPage from "@/pages/LandingPage";
 
 import JoinGroup from "@/forms/JoinGroup";
-import NewGroup from "@/forms/new-group/Form";
 import NewExpense from "@/forms/new-expense/Form";
+import NewGroup from "@/forms/new-group/Form";
 import NewTransaction from "@/forms/NewTransaction";
 
 const queryClient = new QueryClient();
@@ -31,7 +31,7 @@ function App() {
             <BrowserRouter>
               <Sidebar />
               <div
-                className={`relative min-w-[768px] flex-1 bg-background transition-[margin] ${open ? "ml-64" : ""} `}
+                className={`relative flex-1 bg-background transition-[margin] md:min-w-[768px] ${open ? "md:ml-64" : ""} `}
               >
                 <div className="absolute h-10 pl-2 pt-2">
                   {open == false && (

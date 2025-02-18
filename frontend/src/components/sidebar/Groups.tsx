@@ -1,3 +1,4 @@
+import { useSidebarStore } from "@/store";
 import { useGroupStore } from "@/store/groupStore";
 import { Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -8,11 +9,20 @@ type Groups = {
 
 function Groups({ className }: Groups) {
   const { groups, selectedGroupId, setSelectedGroup } = useGroupStore();
+  const { setOpen } = useSidebarStore();
   const navigate = useNavigate();
+
+  const isMobile = !window.matchMedia("(min-width: 768px)").matches;
 
   const selectGroup = (groupId: number, groupCode: string) => {
     setSelectedGroup(groupId);
+    if (isMobile) setOpen(false);
     navigate(`/group/${groupCode}/overview`);
+  };
+
+  const addGroup = () => {
+    if (isMobile) setOpen(false);
+    navigate("/");
   };
 
   return (
@@ -23,7 +33,7 @@ function Groups({ className }: Groups) {
         <p className="text-sm text-muted-foreground">GROUPS</p>
         <Plus
           className="text-secondary-foreground hover:cursor-pointer"
-          onClick={() => navigate("/")}
+          onClick={addGroup}
         />
       </div>
 
