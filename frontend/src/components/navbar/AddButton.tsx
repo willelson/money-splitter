@@ -34,7 +34,7 @@ function AddButton() {
               </div>
             </div>
           </DropdownMenuItem>
-          <DropdownMenuItem className="py-3">
+          <DropdownMenuItem className="py-3" disabled>
             <div
               className="flex items-center gap-3 hover:cursor-pointer"
               onClick={() => navigate("/new-transaction")}
@@ -49,7 +49,7 @@ function AddButton() {
               </div>
             </div>
           </DropdownMenuItem>
-          <DropdownMenuItem className="py-3">
+          <DropdownMenuItem className="py-3" disabled>
             <div className="flex items-center gap-3 hover:cursor-pointer">
               <User className="text-accent-foreground" />
               <div>

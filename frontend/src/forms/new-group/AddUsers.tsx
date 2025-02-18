@@ -29,39 +29,44 @@ function AddUsers({ className, users, addUser, removeUser }: AddUsers) {
 
   return (
     <div className={className}>
-      <label className="mb-2">Add Users</label>
-      <div className="flex">
-        <Input
-          className="mr-2"
-          placeholder="Enter a User name"
-          onKeyDown={enterPressed}
-          value={user}
-          onChange={(e) => setUser(e.target.value)}
-        />
-        <Button
-          className="min-w-[36px]"
-          variant="secondary"
-          size="icon"
-          onClick={addUserToUsers}
-          disabled={user.length === 0}
-        >
-          <Plus />
-        </Button>
-      </div>
-      <ul className="mt-3">
-        {users.map((user, index) => (
-          <li className="flex justify-between py-2" key={`new-user-${index}`}>
-            <p>{user}</p>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => removeUser(index)}
+      <p className="mb-2 text-sm uppercase text-muted-foreground">Users</p>
+      <div className="flex flex-col rounded bg-muted p-2">
+        <div className={`flex ${users.length > 0 ? "mb-3" : ""}`}>
+          <Input
+            className="md:text-md mr-2"
+            placeholder="User name..."
+            onKeyDown={enterPressed}
+            value={user}
+            onChange={(e) => setUser(e.target.value)}
+          />
+          <Button
+            className="min-w-[36px]"
+            variant="secondary"
+            size="icon"
+            onClick={addUserToUsers}
+            disabled={user.length === 0}
+          >
+            <Plus />
+          </Button>
+        </div>
+        <ul className="pl-3">
+          {users.map((user, index) => (
+            <li
+              className="flex items-center justify-between"
+              key={`new-user-${index}`}
             >
-              <X />
-            </Button>
-          </li>
-        ))}
-      </ul>
+              <p>{user}</p>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => removeUser(index)}
+              >
+                <X />
+              </Button>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

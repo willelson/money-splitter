@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,7 +8,6 @@ import AddUsers from "@/forms/new-group/AddUsers";
 import { useGroupStore } from "@/store/groupStore";
 import { saveGroupCodeLocally } from "@/store/utils/groups";
 import { trpc } from "@/trpc";
-import { useNavigate } from "react-router-dom";
 
 function NewGroup() {
   const [name, setName] = useState("");
@@ -37,6 +37,21 @@ function NewGroup() {
   });
 
   const createGroup = () => {
+    const errors: string[] = [];
+    if (name.length === 0) {
+      errors.push("Group name is required");
+    }
+    if (users.length === 0) {
+      errors.push("At least 1 user is required");
+    }
+
+    if (errors.length > 0) {
+      const alertMessage =
+        "There are problems with the form: \n\n" + errors.join("\n");
+      alert(alertMessage);
+      return;
+    }
+
     mutation.mutate({ name, users });
   };
 
@@ -51,12 +66,13 @@ function NewGroup() {
           Create
         </Button>
       </FormHeader>
-      <label className="mb-2">Group name</label>
-      <div>
+      <div className="flex flex-col gap-4 rounded bg-muted p-2">
         <Input
+          className="md:text-md"
           placeholder="Group name"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          autoFocus
         />
       </div>
       <AddUsers
