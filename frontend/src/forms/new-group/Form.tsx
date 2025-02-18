@@ -26,10 +26,10 @@ function NewGroup() {
       addGroup(newGroup);
       setSelectedGroup(newGroup.id);
 
-      // navigate to group overview
-      navigate("/overview");
-
       saveGroupCodeLocally(newGroup.code);
+
+      // navigate to group overview
+      navigate(`/group/${newGroup.code}/overview`);
     },
     onError: (error) => {
       console.error("Error creating group:", error);

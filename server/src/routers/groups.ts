@@ -37,19 +37,21 @@ export const groupRouter = t.router({
     .mutation(async ({ input }) => {
       const newGroup = await createGroup(input.name);
 
-      input.users.forEach(async (userName) => {
-        const user = await createUser(userName);
-        await addUserToGroup(newGroup.id, user.id);
-      });
+      await Promise.all(
+        input.users.map(async (userName) => {
+          const user = await createUser(userName);
+          await addUserToGroup(newGroup.id, user.id);
+        })
+      );
 
-      const updatedGroup = await getGroup(newGroup.code);
+      const groupWithUsers = await getGroup(newGroup.code);
 
-      if (updatedGroup === undefined) {
+      if (groupWithUsers === undefined) {
         // TODO: refine this error
         throw Error("Problem fetching newly created group");
       }
 
-      return updatedGroup;
+      return groupWithUsers;
     }),
 
   getBalances: t.procedure
