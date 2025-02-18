@@ -39,7 +39,7 @@ export const insertTransaction = async (
     .values(newTransaction)
     .returning();
 
-  const recipientShare = parseFloat(amount) / recipientIds.length;
+  const recipientShares = calculateUserShares(amount, recipientIds);
 
   recipientIds.forEach(async (recipientId) => {
     const newTransactionRecipients: typeof transactionRecipients.$inferInsert =
@@ -47,7 +47,7 @@ export const insertTransaction = async (
         transaction_id: insertedTransaction[0].id,
         recipient_id: recipientId,
         // TODO: fix this being cast as a string
-        share: recipientShare.toString(),
+        share: recipientShares[recipientId].toString(),
       };
 
     await db.insert(transactionRecipients).values(newTransactionRecipients);
@@ -125,4 +125,40 @@ export const getUserBalances = async (
   });
 
   return userBalances;
+};
+
+/**
+ * Calculate the share allocated to each user. For example, if 3 users split 10.00, one must
+ * pay 3.34 and two must pay 3.33.
+ *
+ * Returns a record of user id and share
+ * eg users with ids 24, 26 & 45 splitting 10.00 returns { 24: 3.33, 26: 3.34, 45: 3.33}
+ */
+const calculateUserShares = (
+  amount: string,
+  userIds: number[]
+): Record<number, number> => {
+  const totalAmount = parseFloat(amount);
+
+  const startingShare =
+    Math.floor((parseFloat(amount) / userIds.length) * 100) / 100;
+
+  const userShares: Record<number, number> = {};
+
+  userIds.forEach((id) => (userShares[id] = startingShare));
+
+  // claculate missing cents
+  const missingCents = Math.round(
+    (totalAmount - startingShare * userIds.length) / 0.01
+  );
+
+  // for each missing cent, randomly allocate an extra cent to a users share
+  for (let i = 0; i < missingCents; i++) {
+    const randomUserIdIndex = Math.floor(Math.random() * userIds.length);
+    const userId = userIds[randomUserIdIndex];
+    const newShare = Math.round((userShares[userId] + 0.01) * 100) / 100;
+    userShares[userId] = newShare;
+  }
+
+  return userShares;
 };
