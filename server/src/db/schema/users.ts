@@ -1,14 +1,14 @@
 import { relations } from "drizzle-orm";
 import {
+  boolean,
   integer,
   pgTable,
   timestamp,
   varchar,
-  boolean,
 } from "drizzle-orm/pg-core";
 
-import { groups } from "./groups";
-import { transactionRecipients } from "./transactionRecipients";
+import { groups } from "./groups.js";
+import { transactionRecipients } from "./transactionRecipients.js";
 
 export const users = pgTable("users", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),

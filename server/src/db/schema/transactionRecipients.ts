@@ -1,8 +1,8 @@
 import { relations } from "drizzle-orm";
 import { integer, pgTable, timestamp, numeric } from "drizzle-orm/pg-core";
 
-import { transactions } from "./transactions";
-import { users } from "./users";
+import { transactions } from "./transactions.js";
+import { users } from "./users.js";
 
 export const transactionRecipients = pgTable("transaction_recipients", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),

@@ -1,15 +1,15 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { t } from "../trpc";
+import { t } from "../trpc.js";
 
 import {
   addUserToGroup,
   createGroup,
   getGroup,
   getGroups,
-} from "../db/utils/groups";
-import { getUserBalances } from "../db/utils/transactions";
-import { createUser } from "../db/utils/users";
+} from "../db/utils/groups.js";
+import { getUserBalances } from "../db/utils/transactions.js";
+import { createUser } from "../db/utils/users.js";
 
 export const groupRouter = t.router({
   get: t.procedure

@@ -1,5 +1,5 @@
-import { db } from "../index";
-import { users } from "../schema/users";
+import { db } from "../index.js";
+import { users } from "../schema/users.js";
 
 type User = typeof users.$inferSelect;
 type UserInsert = typeof users.$inferInsert;

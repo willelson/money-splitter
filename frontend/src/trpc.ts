@@ -6,5 +6,5 @@ import { AppRouter } from "../../server/src/server";
 export const trpc = createTRPCReact<AppRouter>();
 
 export const client = trpc.createClient({
-  links: [httpBatchLink({ url: "http://localhost:3000/api" })],
+  links: [httpBatchLink({ url: import.meta.env.VITE_SERVER_URL })],
 });

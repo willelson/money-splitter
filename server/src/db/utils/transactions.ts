@@ -1,10 +1,10 @@
 import { eq, sum } from "drizzle-orm";
 
-import { db } from "../index";
-import { transactionRecipients } from "../schema/transactionRecipients";
-import { transactions } from "../schema/transactions";
-import { users } from "../schema/users";
-import { getGroup } from "./groups";
+import { db } from "../index.js";
+import { transactionRecipients } from "../schema/transactionRecipients.js";
+import { transactions } from "../schema/transactions.js";
+import { users } from "../schema/users.js";
+import { getGroup } from "./groups.js";
 
 type Transaction = typeof transactions.$inferSelect;
 

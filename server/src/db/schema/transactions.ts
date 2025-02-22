@@ -7,9 +7,9 @@ import {
   varchar,
 } from "drizzle-orm/pg-core";
 
-import { groups } from "./groups";
-import { transactionRecipients } from "./transactionRecipients";
-import { users } from "./users";
+import { groups } from "./groups.js";
+import { transactionRecipients } from "./transactionRecipients.js";
+import { users } from "./users.js";
 
 export const transactions = pgTable("transactions", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),

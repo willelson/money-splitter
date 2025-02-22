@@ -1,8 +1,8 @@
 import { eq, inArray } from "drizzle-orm";
 
-import { db } from "../index";
-import { groups } from "../schema/groups";
-import { users } from "../schema/users";
+import { db } from "../index.js";
+import { groups } from "../schema/groups.js";
+import { users } from "../schema/users.js";
 
 type Group = typeof groups.$inferSelect & {
   users: (typeof users.$inferSelect)[];
@@ -24,12 +24,19 @@ export const getGroup = async (code: string): Promise<Group> => {
 };
 
 export const getGroups = async (codes: string[]): Promise<Group[]> => {
-  return await db.query.groups.findMany({
-    where: inArray(groups.code, codes),
-    with: {
-      users: true,
-    },
-  });
+  try {
+    return await db.query.groups.findMany({
+      where: inArray(groups.code, codes),
+      with: {
+        users: true,
+      },
+    });
+  } catch (e) {
+    console.log("error", e);
+    throw Error("Database error");
+  }
+
+  return new Promise<Group[]>((resolve) => resolve([]));
 };
 
 export const createGroup = async (
