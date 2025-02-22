@@ -12,7 +12,7 @@ COPY . .
 # Ensure TypeScript compiles
 RUN npm run build
 
-# Start the server
-CMD ["node", "--experimental-specifier-resolution=node", "dist/server.js"]
+# Start the server && run mirations to ensure db tales are created
+CMD ["sh", "-c", "npm run drizzle:migrate && node dist/server.js"]
 
 EXPOSE 3000
