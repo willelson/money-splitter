@@ -8,7 +8,7 @@ export const useGroupStore = create<GroupStore>((set) => ({
   setGroups: (groups: Group[]) => set(() => ({ groups })),
   setSelectedGroup: (groupId: number) =>
     set((store) => {
-    set(() => ({ selectedGroupId: groupId })),
+      set(() => ({ selectedGroupId: groupId }));
       const group = store.groups.find((g) => g.id === groupId);
       if (group === undefined) {
         throw Error(`Group with id ${groupId} does not exist in the store`);
