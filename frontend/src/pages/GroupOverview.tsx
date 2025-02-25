@@ -1,4 +1,6 @@
 import NavBar from "@/components/navbar/NavBar";
+import BalancesSkeletons from "@/components/skeletons/BalancesSkeletons";
+import GroupOverviewSkeleton from "@/components/skeletons/GroupOverviewSkeleton";
 import { useCodeParam } from "@/hooks/useCodeParam";
 import { useGroupStore } from "@/store/groupStore";
 import { trpc } from "@/trpc";
@@ -13,12 +15,27 @@ function GroupOverview() {
     error,
   } = trpc.groups.getBalances.useQuery({ code: code! });
 
-  if (balances === undefined) return <p>balances error</p>;
+  if (error !== null || (selectedGroup === null && !isLoading))
+    return <p className="text-light">There was an error loading this group.</p>;
 
-  if (error) console.error(error);
+  if (balances === undefined) return <GroupOverviewSkeleton />;
 
-  // TODO: handle loadin state and errors
-  if (selectedGroup === null && !isLoading) return <p>group error</p>;
+  const userBalances = (
+    <ul className="flex flex-col gap-4 rounded bg-muted p-2">
+      {balances !== undefined &&
+        balances.map((user, index) => (
+          <li className="flex justify-between py-1" key={`group-user-${index}`}>
+            <p>{user.name}</p>
+            <p>
+              {user.balance.toLocaleString("de-DE", {
+                style: "currency",
+                currency: "EUR",
+              })}
+            </p>
+          </li>
+        ))}
+    </ul>
+  );
 
   return (
     <div className="flex h-full flex-col gap-2">
@@ -29,22 +46,7 @@ function GroupOverview() {
         </p>
       </div>
       <div className="flex-1">
-        <ul className="flex flex-col gap-4 rounded bg-muted p-2">
-          {balances.map((user, index) => (
-            <li
-              className="flex justify-between py-1"
-              key={`group-user-${index}`}
-            >
-              <p>{user.name}</p>
-              <p>
-                {user.balance.toLocaleString("de-DE", {
-                  style: "currency",
-                  currency: "EUR",
-                })}
-              </p>
-            </li>
-          ))}
-        </ul>
+        {isLoading ? <BalancesSkeletons /> : userBalances}
       </div>
       <NavBar />
     </div>

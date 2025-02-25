@@ -1,14 +1,17 @@
-import { useSidebarStore } from "@/store";
-import { useGroupStore } from "@/store/groupStore";
 import { Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+
+import { useSidebarStore } from "@/store";
+import { useGroupStore } from "@/store/groupStore";
+import GroupsSkeleton from "./GroupsSkeleton";
 
 type Groups = {
   className?: string;
 };
 
 function Groups({ className }: Groups) {
-  const { groups, selectedGroupId, setSelectedGroup } = useGroupStore();
+  const { groups, selectedGroupId, setSelectedGroup, loadingGroups } =
+    useGroupStore();
   const { setOpen } = useSidebarStore();
   const navigate = useNavigate();
 
@@ -27,7 +30,7 @@ function Groups({ className }: Groups) {
 
   return (
     <div
-      className={`flex flex-col gap-4 rounded bg-primary-foreground p-3 ${className}`}
+      className={`flex max-h-[55vh] flex-col gap-4 overflow-auto rounded bg-primary-foreground p-3 ${className}`}
     >
       <div className="flex items-center justify-between">
         <p className="text-sm text-muted-foreground">GROUPS</p>
@@ -37,25 +40,35 @@ function Groups({ className }: Groups) {
         />
       </div>
 
-      {groups.map((group) => {
-        const groupSize = group.users.length;
-        const isSelected = group.id === selectedGroupId;
+      {loadingGroups && groups.length === 0 ? (
+        <GroupsSkeleton />
+      ) : (
+        groups.map((group) => {
+          const groupSize = group.users.length;
+          const isSelected = group.id === selectedGroupId;
 
-        return (
-          <div
-            key={group.id}
-            className="hover:cursor-pointer"
-            onClick={() => selectGroup(group.id, group.code)}
-          >
-            <p className={`${isSelected ? "text-accent-foreground" : ""}`}>
-              {group.name}
-            </p>
-            <p className="text-xs text-muted-foreground">
-              {groupSize} Person{groupSize > 1 ? "s" : ""}
-            </p>
-          </div>
-        );
-      })}
+          return (
+            <div
+              key={group.id}
+              className="hover:cursor-pointer"
+              onClick={() => selectGroup(group.id, group.code)}
+            >
+              <p className={`${isSelected ? "text-accent-foreground" : ""}`}>
+                {group.name}
+              </p>
+              <p className="text-xs text-muted-foreground">
+                {groupSize} Person{groupSize > 1 ? "s" : ""}
+              </p>
+            </div>
+          );
+        })
+      )}
+
+      {groups.length === 0 && !loadingGroups && (
+        <div className="text-light text-sm text-muted-foreground">
+          No groups yet...
+        </div>
+      )}
     </div>
   );
 }
