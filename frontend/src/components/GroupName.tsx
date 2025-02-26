@@ -62,7 +62,7 @@ function GroupName({ name, groupCode }: GroupName) {
               <EllipsisVertical className="text-foreground-muted cursor-pointer" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="mt-1 w-48" align="end">
+          <DropdownMenuContent className="mt-1 w-40" align="end">
             <DropdownMenuGroup>
               <DropdownMenuItem
                 className="py-3 hover:cursor-pointer"
