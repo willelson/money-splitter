@@ -1,8 +1,30 @@
 # Expense Splitting App
 
-This is a simple expense splitting app using [Drizzle ORM](https://orm.drizzle.team/docs/overview), [Postgres](https://www.postgresql.org/), [tRPC](https://trpc.io/), [Express JS](https://expressjs.com/) and [React](https://react.dev/).
+This is a simple expense splitting app that makes it easy to track shared costs, record payments, and see who owes what.
 
 The UI is inspired heavily by [Splid](https://splid.app/).
+
+### Features
+
+- Create groups with multiple users to track expenses.
+- No sign in or authentication required. Groups are accessed by a uniquely generated code, making them easy to share.
+- Easily see who owes what in the balances section off the group overview.
+
+### Technology
+
+#### Frontend
+
+- [React](https://react.dev/) and [TypeScript](https://www.typescriptlang.org/) frontend.
+- [Zustand](https://zustand.docs.pmnd.rs/) state management.
+- [React Query](https://trpc.io/docs/client/tanstack-react-query/setup) query management.
+- [Tailwind CSS](https://tailwindcss.com/) styling.
+
+#### Server
+
+- [Express JS](https://expressjs.com/) and [TypeScript](https://www.typescriptlang.org/) server.
+- [Drizzle ORM](https://orm.drizzle.team/docs/overview) database management.
+- [Postgres](https://www.postgresql.org/) database.
+- [tRPC](https://trpc.io/) end-to-end typesafe API.
 
 ## Getting Started
 
