@@ -2,6 +2,7 @@ import { z } from "zod";
 import { t } from "../trpc.js";
 
 import {
+  deleteTransaction,
   getTransactions,
   insertTransaction,
 } from "../db/utils/transactions.js";
@@ -34,5 +35,16 @@ export const transactionRouter = t.router({
         String(input.amount),
         input.type
       );
+    }),
+
+  delete: t.procedure
+    .input(
+      z.object({
+        groupCode: z.string(),
+        transactionId: z.number(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      await deleteTransaction(input.groupCode, input.transactionId);
     }),
 });

@@ -1,4 +1,4 @@
-import { eq, sum } from "drizzle-orm";
+import { and, eq, sum } from "drizzle-orm";
 
 import { db } from "../index.js";
 import { transactionRecipients } from "../schema/transactionRecipients.js";
@@ -52,6 +52,23 @@ export const insertTransaction = async (
 
     await db.insert(transactionRecipients).values(newTransactionRecipients);
   });
+};
+
+export const deleteTransaction = async (
+  code: string,
+  transactionId: number
+) => {
+  // Check valid roup code was passed and use it for deletion
+  const group = await getGroup(code);
+
+  await db
+    .delete(transactions)
+    .where(
+      and(
+        eq(transactions.id, transactionId),
+        eq(transactions.group_id, group.id)
+      )
+    );
 };
 
 type UserBalance = {
