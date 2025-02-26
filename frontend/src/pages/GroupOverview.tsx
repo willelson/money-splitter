@@ -1,3 +1,4 @@
+import GroupName from "@/components/GroupName";
 import NavBar from "@/components/navbar/NavBar";
 import BalancesSkeletons from "@/components/skeletons/BalancesSkeletons";
 import GroupOverviewSkeleton from "@/components/skeletons/GroupOverviewSkeleton";
@@ -40,7 +41,7 @@ function GroupOverview() {
   return (
     <div className="flex h-full flex-col gap-2">
       <div>
-        <h1 className="text-lg">{selectedGroup!.name}</h1>
+        <GroupName name={selectedGroup!.name} groupCode={selectedGroup!.code} />
         <p className="text-md mt-4 font-extralight text-muted-foreground">
           BALANCE
         </p>

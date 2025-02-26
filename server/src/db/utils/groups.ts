@@ -56,3 +56,10 @@ export const createGroup = async (
 export const addUserToGroup = async (groupId: number, userId: number) => {
   await db.update(users).set({ group_id: groupId }).where(eq(users.id, userId));
 };
+
+export const updateGroupName = async (groupId: number, newName: string) =>
+  await db
+    .update(groups)
+    .set({ name: newName })
+    .where(eq(groups.id, groupId))
+    .returning({ id: groups.id, name: groups.name, code: groups.code });

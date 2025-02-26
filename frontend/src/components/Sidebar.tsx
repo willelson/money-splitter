@@ -12,7 +12,8 @@ import { loadLocalGroupCodes } from "@/store/utils/groups";
 
 function Sidebar() {
   const { open, setOpen } = useSidebarStore();
-  const { groups, setGroups, setLoadingGroups } = useGroupStore();
+  const { setGroups, setLoadingGroups, setSelectedGroup, selectedGroup } =
+    useGroupStore();
 
   const savedGroupCodes = loadLocalGroupCodes();
 
@@ -21,18 +22,22 @@ function Sidebar() {
       codes: savedGroupCodes,
     },
     {
-      enabled: groups.length === 0,
-      staleTime: Infinity,
-      cacheTime: Infinity,
       refetchOnWindowFocus: false,
-      onSuccess: (fetchedGroups) => setGroups(fetchedGroups),
+      onSuccess: (fetchedGroups) => {
+        setGroups(fetchedGroups);
+
+        // Re-set selected group from fetchedGroups
+        if (selectedGroup !== null) {
+          setSelectedGroup(selectedGroup.id);
+        }
+      },
     },
   );
   useEffect(() => setLoadingGroups(isLoading), [isLoading]);
 
   return (
     <div
-      className={`absolute z-10 h-full w-64 bg-muted p-2 transition-[left] ${open ? "left-0" : "-left-64"}`}
+      className={`absolute z-50 h-full w-64 bg-muted p-2 transition-[left] ${open ? "left-0" : "-left-64"}`}
     >
       <div className="mb-10 flex justify-between">
         <Button onClick={() => setOpen(false)} variant="ghost" size="icon">

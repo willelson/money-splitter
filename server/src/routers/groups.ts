@@ -7,6 +7,7 @@ import {
   createGroup,
   getGroup,
   getGroups,
+  updateGroupName,
 } from "../db/utils/groups.js";
 import { getUserBalances } from "../db/utils/transactions.js";
 import { createUser } from "../db/utils/users.js";
@@ -52,6 +53,15 @@ export const groupRouter = t.router({
       }
 
       return groupWithUsers;
+    }),
+
+  updateName: t.procedure
+    .input(z.object({ code: z.string(), name: z.string() }))
+    .mutation(async ({ input }) => {
+      const group = await getGroup(input.code);
+      const updatedGroup = await updateGroupName(group.id, input.name);
+
+      return updatedGroup[0];
     }),
 
   getBalances: t.procedure
