@@ -1,4 +1,4 @@
-import { and, eq, sum } from "drizzle-orm";
+import { and, desc, eq, sum } from "drizzle-orm";
 
 import { db } from "../index.js";
 import { transactionRecipients } from "../schema/transactionRecipients.js";
@@ -13,9 +13,11 @@ export const getTransactions = async (
 ): Promise<Transaction[]> => {
   const group = await getGroup(groupCode);
 
-  return await db.query.transactions.findMany({
-    where: eq(transactions.group_id, group.id),
-  });
+  return await db
+    .select()
+    .from(transactions)
+    .where(eq(transactions.group_id, group.id))
+    .orderBy(desc(transactions.created_at));
 };
 
 export const insertTransaction = async (
