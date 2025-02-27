@@ -17,6 +17,9 @@ RUN cd frontend && npm install
 COPY frontend ./frontend
 COPY server ./server
 
+# Build the server
+RUN cd server && npm install && npm run build
+
 # Build the frontend
 RUN cd frontend && VITE_SERVER_URL=${VITE_SERVER_URL} npm run build
 
