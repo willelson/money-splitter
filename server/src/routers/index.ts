@@ -1,6 +1,6 @@
-import { t } from "../trpc.js";
-import { groupRouter } from "./groups.js";
-import { transactionRouter } from "./transactions.js";
+import { t } from "../trpc";
+import { groupRouter } from "./groups";
+import { transactionRouter } from "./transactions";
 
 export const appRouter = t.router({
   groups: groupRouter,

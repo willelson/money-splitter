@@ -2,7 +2,7 @@ import { createExpressMiddleware } from "@trpc/server/adapters/express";
 import cors from "cors";
 import express from "express";
 
-import { appRouter } from "./routers/index.js";
+import { appRouter } from "./routers/index";
 
 const app = express();
 

@@ -1,8 +1,8 @@
 import { relations } from "drizzle-orm";
 import { integer, pgTable, timestamp, varchar } from "drizzle-orm/pg-core";
 
-import { transactions } from "./transactions.js";
-import { users } from "./users.js";
+import { transactions } from "./transactions";
+import { users } from "./users";
 
 export const groups = pgTable("groups", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),

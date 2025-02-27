@@ -1,11 +1,11 @@
 import { z } from "zod";
-import { t } from "../trpc.js";
+import { t } from "../trpc";
 
 import {
   deleteTransaction,
   getTransactions,
   insertTransaction,
-} from "../db/utils/transactions.js";
+} from "../db/utils/transactions";
 
 export const transactionRouter = t.router({
   get: t.procedure
