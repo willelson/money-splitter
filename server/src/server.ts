@@ -6,6 +6,7 @@ import { appRouter } from "./routers/index";
 
 const app = express();
 
+app.options("*", cors());
 app.use(cors({ origin: process.env.FRONTEND_URL }));
 app.use("/api", createExpressMiddleware({ router: appRouter }));
 
