@@ -9,12 +9,10 @@ The UI is inspired heavily by [Splid](https://splid.app/).
 - Create groups with multiple users to track expenses.
 - No sign in or authentication required. Groups are accessed by a uniquely generated code, making them easy to share.
 - Easily see who owes what in the balances section off the group overview.
-<img width="1025" alt="overview" src="https://github.com/user-attachments/assets/3cb14f2d-e7de-4e4b-848d-c2f2515d7486" />
+  <img width="1025" alt="overview" src="https://github.com/user-attachments/assets/3cb14f2d-e7de-4e4b-848d-c2f2515d7486" />
 
 - View, search and delete groups transactions.
-<img width="1025" alt="transactions" src="https://github.com/user-attachments/assets/271c04a4-0e0d-42ee-9622-a230a5444cb8" />
-
-
+  <img width="1025" alt="transactions" src="https://github.com/user-attachments/assets/271c04a4-0e0d-42ee-9622-a230a5444cb8" />
 
 ### Technology
 
@@ -36,23 +34,7 @@ The UI is inspired heavily by [Splid](https://splid.app/).
 
 ### Run the project locally
 
-The easiest way to run the project is using Docker.
-
-First, create a `.env` in the root directory with the credentials for the postres database.
-
-```
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=mysecretpassword
-POSTGRES_DB=postgres
-```
-
-Build the server files, as the frontend depends on them
-
-```
-cd server && npm install && npm run build
-```
-
-Then spin up the project from the root directory with `docker-compose`
+The easiest way to run the project is using Docker. Spin up the project from the root directory with `docker-compose`
 
 ```
 docker-compose build
