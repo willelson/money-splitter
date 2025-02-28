@@ -1,4 +1,4 @@
-import { ChevronRight, PanelLeftClose } from "lucide-react";
+import { PanelLeftClose } from "lucide-react";
 import { useEffect } from "react";
 import { trpc } from "../trpc";
 
@@ -37,7 +37,7 @@ function Sidebar() {
 
   return (
     <div
-      className={`absolute z-50 h-full w-64 bg-muted p-2 transition-[left] ${open ? "left-0" : "-left-64"}`}
+      className={`absolute z-50 flex h-full w-64 flex-col bg-muted p-2 transition-[left] ${open ? "left-0" : "-left-64"}`}
     >
       <div className="mb-10 flex justify-between">
         <Button onClick={() => setOpen(false)} variant="ghost" size="icon">
@@ -48,15 +48,10 @@ function Sidebar() {
 
       <Groups />
 
-      <div className="mt-10 px-2">
-        <div className="flex justify-between py-2 text-muted-foreground">
-          About
-          <ChevronRight />
-        </div>
-        <div className="flex justify-between py-2 text-muted-foreground">
-          Settings
-          <ChevronRight />
-        </div>
+      <div className="mt-10 flex flex-1 flex-col justify-end px-2">
+        <p className="pb-2 text-center text-sm text-muted-foreground">
+          A project by <a href="https://github.com/willelson">willelson</a>
+        </p>
       </div>
     </div>
   );
