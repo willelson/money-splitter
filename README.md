@@ -42,3 +42,62 @@ docker-compose up
 ```
 
 The app should now be running at [http://localhost:4173](http://localhost:4173).
+
+### Local development
+
+First, spin up a Postres database.
+
+```
+docker run -d \
+  -e POSTGRES_PASSWORD=mysecretpassword \
+  -p 5432:5432 \
+  postgres
+```
+
+Then create a `.env` in the `/server` directory.
+
+```
+POSTGRES_PASSWORD='mysecretpassword'
+FRONTEND_URL='http://localhost:5173'
+```
+
+Install the dependencies.
+
+```
+cd server
+npm install
+```
+
+Create the database tables.
+
+```
+npm run drizzle:migrate
+```
+
+And then run the api server.
+
+```
+npm run dev
+```
+
+Now create a `.env` in the `/frontend` directory.
+
+```
+VITE_SERVER_URL='http://localhost:3000/api'
+```
+
+Then install the dependencies and run the server
+
+```
+cd frontend
+npm install
+npm run dev
+```
+
+The app should now be running at [http://localhost:5173](http://localhost:5173).
+
+To start up [drizzle-kit studio](https://orm.drizzle.team/docs/drizzle-kit-studio), from the `/server` directory run
+
+```
+npx drizzle-kit studio
+```
