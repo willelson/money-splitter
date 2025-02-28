@@ -2,7 +2,9 @@ import "dotenv/config";
 import { defineConfig } from "drizzle-kit";
 
 const dbHost = process.env.POSTGRES_HOST || "localhost";
-const DATABASE_URL = `postgresql://postgres:${process.env.POSTGRES_PASSWORD}@${dbHost}:5432/postgres`;
+const DATABASE_URL =
+  process.env.DATABASE_URL ||
+  `postgresql://postgres:${process.env.POSTGRES_PASSWORD}@${dbHost}:5432/postgres`;
 
 export default defineConfig({
   out: "./src/db/migrations",

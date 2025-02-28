@@ -7,7 +7,9 @@ import * as transactionsSchema from "./schema/transactions.js";
 import * as usersSchema from "./schema/users.js";
 
 const dbHost = process.env.POSTGRES_HOST || "localhost";
-const DATABASE_URL = `postgresql://postgres:${process.env.POSTGRES_PASSWORD}@${dbHost}:5432/postgres`;
+const DATABASE_URL =
+  process.env.DATABASE_URL ||
+  `postgresql://postgres:${process.env.POSTGRES_PASSWORD}@${dbHost}:5432/postgres`;
 
 export const db = drizzle(DATABASE_URL, {
   schema: {
