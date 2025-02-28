@@ -9,6 +9,7 @@ services:
       - db
     environment:
       POSTGRES_PASSWORD: example
+      POSTGRES_HOST: db
       FRONTEND_URL: http://localhost:4173
     networks:
       - expense-splitter-network
