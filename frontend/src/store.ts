@@ -6,6 +6,6 @@ type SidebarStore = {
 };
 
 export const useSidebarStore = create<SidebarStore>((set) => ({
-  open: true,
+  open: window.matchMedia("(min-width: 768px)").matches,
   setOpen: (newOpenState: boolean) => set(() => ({ open: newOpenState })),
 }));
