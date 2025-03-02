@@ -1,4 +1,3 @@
-import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { t } from "../trpc";
 
@@ -16,14 +15,7 @@ export const groupRouter = t.router({
   get: t.procedure
     .input(z.object({ code: z.string() }))
     .query(async ({ input }) => {
-      const group = await getGroup(input.code);
-      if (!group) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Group not found",
-        });
-      }
-      return group;
+      return await getGroup(input.code);
     }),
 
   getMany: t.procedure

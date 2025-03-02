@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server";
 import { eq, inArray } from "drizzle-orm";
 
 import { db } from "../index.js";
@@ -17,7 +18,10 @@ export const getGroup = async (code: string): Promise<Group> => {
   });
 
   if (group === undefined) {
-    throw Error(`Group with name "${code}" not found`);
+    throw new TRPCError({
+      code: "NOT_FOUND",
+      message: "Group not found",
+    });
   }
 
   return group;
@@ -35,8 +39,6 @@ export const getGroups = async (codes: string[]): Promise<Group[]> => {
     console.log("error", e);
     throw Error("Database error");
   }
-
-  return new Promise<Group[]>((resolve) => resolve([]));
 };
 
 export const createGroup = async (
