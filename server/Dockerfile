@@ -13,7 +13,6 @@ COPY . .
 RUN npm run build
 
 # Start the server && run mirations to ensure db tables are created
-# CMD ["sh", "-c", "npm run drizzle:migrate && node dist/server.js"]
 CMD ["npm", "run", "start"]
 
 EXPOSE 3000
