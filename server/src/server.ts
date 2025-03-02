@@ -13,6 +13,11 @@ app.use("/api", createExpressMiddleware({ router: appRouter }));
 
 const PORT = process.env.PORT || 3000;
 console.log(`PORT = ${PORT}`);
+
+app.get("/test", (_, res) => {
+  res.send(`PORT = ${PORT}`);
+});
+
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 export type AppRouter = typeof appRouter;
